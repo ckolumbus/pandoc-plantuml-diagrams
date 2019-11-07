@@ -1,19 +1,19 @@
 name:                pandoc-plantuml-diagrams
-version:             0.1.0.3
+version:             0.2.0.0
 synopsis:            Render and insert PlantUML diagrams with Pandoc
 description:         PlantUML renders different types of UML diagrams.
                      This filter invokes plantuml.jar (which must be present
                      in the current directory) for any yet unrendered diagrams.
                      .
                      Diagrams are recognized in CodeBlocks that have the
-                     class "uml". It is advisable to also include an attribute
+                     class "plantuml". It is advisable to also include an attribute
                      "caption", which is rendered as alternate text for the image.
                      If an ID is present, it is additionally appended compatible
                      with pandoc-crossref.
 license:             MIT
 license-file:        LICENSE
-author:              Jonas Weber
-maintainer:          contact@jonasw.de
+author:              Jonas Weber, Chris Drexler
+maintainer:          contact@jonasw.de, ckolumbus@ac-drexler.de
 category:            Text
 build-type:          Simple
 cabal-version:       >=1.10
@@ -57,4 +57,4 @@ Test-Suite test-pandoc-crossref
 
 source-repository head
   type:                git
-  location:            git://github.com/thriqon/pandoc-plantuml-diagrams
+  location:            git://github.com/ckolumbus/pandoc-plantuml-diagrams
