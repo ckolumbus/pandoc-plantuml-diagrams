@@ -20,7 +20,7 @@ import Text.Pandoc.PlantUML.Filter.OutputBlock
 --
 processBlocks :: ImageIO m => Maybe Format -> Block -> m Block
 processBlocks (Just format) block@(CodeBlock attr@(_, classes, _) contents)
-  | "uml" `elem` classes       = do
+  | "plantuml" `elem` classes       = do
     ensureRendered imageFileName (DiagramSource contents)
     return $ resultBlock imageFileName attr
   | otherwise                  = return block
