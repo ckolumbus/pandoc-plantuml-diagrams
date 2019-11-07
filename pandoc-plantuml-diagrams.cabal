@@ -27,6 +27,8 @@ library
                      , Text.Pandoc.PlantUML.Filter.OutputBlock
   build-depends:       base >= 4 && < 5
                      , pandoc-types
+                     , mtl
+                     , filepath
                      , SHA
                      , process
                      , directory

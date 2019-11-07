@@ -11,7 +11,7 @@ Installation
 ------------
 
 This filter depends on an executable `plantuml.jar`, which can be acquired from
-their homepage:
+their homepage and needs to be placed next to the filter executable:
 
     $ cabal install pandoc-plantuml-diagrams
     $ wget http://sourceforge.net/projects/plantuml/files/plantuml.jar/download -O plantuml.jar

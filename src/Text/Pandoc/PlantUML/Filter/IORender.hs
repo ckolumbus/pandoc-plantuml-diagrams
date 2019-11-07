@@ -8,6 +8,11 @@ import Data.ByteString.Lazy (hGetContents, hPut)
 import System.Process
 import System.Directory
 
+import System.Environment (getExecutablePath)
+import System.FilePath 
+import System.IO.Unsafe (unsafePerformIO)
+import Control.Monad.Trans (liftIO)
+
 import Text.Pandoc.PlantUML.Filter.Types
 
 instance ImageIO IO where
@@ -20,8 +25,20 @@ instance ImageIO IO where
       where withImageFile = withBinaryFile (show imageFileName) WriteMode
   doesImageExist imageFileName = doesFileExist $ show imageFileName
 
+-- getPlantumlPath : 
+--   returns the the absolute file path to "plantuml.jar" 
+--   with the directory if this executable
+
+-- getPlantumlPath :: String
+-- getPlantumlPath = do
+--   execDir  <-  ( takeDirectory getExecutablePath )
+--   fullPath <- joinPath [ execDir , "plantuml.jar" ]
+--   return (fullPath)
+
+
+plantPath = "plantuml.jar"
 plantUmlProcess :: ImageFileName -> CreateProcess
-plantUmlProcess (ImageFileName _ fileType) = (proc "java" ["-jar", "plantuml.jar", "-pipe", "-t" ++ fileType])
+plantUmlProcess (ImageFileName _ fileType) = (proc "java" ["-jar", plantPath, "-pipe", "-t" ++ fileType])
   { std_in = CreatePipe, std_out = CreatePipe }
 
 pipe :: Handle -> Handle -> IO ()
