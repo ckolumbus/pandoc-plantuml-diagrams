@@ -21,7 +21,7 @@ Usage
 
 Declare code blocks in the source markdown like:
 
-    ```{#fig:actors .uml caption="See this!!!"}
+    ```{#fig:actors .plantuml caption="See this!!!"}
     @startuml
     Alice -> Bob: Authentication Request
     Bob --> Alice: Authentication Response

@@ -43,16 +43,16 @@ spec :: Spec
 spec = do
   describe "Text.Pandoc.PlantUML.Filter" $ do
     it "renders a diagram with some content" $ do
-      let (_, endState) = runProcessingIn def "manpage" (CodeBlock ("id", ["uml"], []) "dsa")
+      let (_, endState) = runProcessingIn def "manpage" (CodeBlock ("id", ["plantuml"], []) "dsa")
       (renderedImages endState) `shouldBe` [(baseNameForDiagramDsa ++ ".png", (DiagramSource "dsa"))]
     it "skips other blocks" $ do
       let (_, endState) = runProcessingIn def "manpage" $ Para [Str "@startuml asd @enduml"]
       (renderedImages endState) `shouldBe` []
     it "doesn't re-render an already rendered diagram" $ do
       let world = def { existingImages = [baseNameForDiagramAsd ++ ".eps"]}
-      let (_, endState) = runProcessingIn world "latex" $ (CodeBlock ("id", ["uml"], []) "asd")
+      let (_, endState) = runProcessingIn world "latex" $ (CodeBlock ("id", ["plantuml"], []) "asd")
       (renderedImages endState) `shouldBe` []
     it "rerenders a diagram for a different format" $ do
       let world = def { existingImages = [baseNameForDiagramAsd ++ ".eps"]}
-      let (_, endState) = runProcessingIn world "html" $ (CodeBlock ("id", ["uml"], []) "asd")
+      let (_, endState) = runProcessingIn world "html" $ (CodeBlock ("id", ["plantuml"], []) "asd")
       (renderedImages endState) `shouldBe` [(baseNameForDiagramAsd ++ ".png", (DiagramSource "asd"))]
