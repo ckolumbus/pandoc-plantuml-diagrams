@@ -17,7 +17,11 @@ import Text.Pandoc.PlantUML.Filter.Types
 
 instance ImageIO IO where
   renderImage imageFileName (DiagramSource source) = do
-    (Just hIn, Just hOut, _, _) <- createProcess $ plantUmlProcess imageFileName
+
+    execPath <- getExecutablePath
+    let plantPath = joinPath [ takeDirectory execPath, plantName ]
+
+    (Just hIn, Just hOut, _, _) <- createProcess $ plantUmlProcess plantPath imageFileName
     hPutStr hIn source
     hClose hIn
     withImageFile $ pipe hOut
@@ -29,16 +33,9 @@ instance ImageIO IO where
 --   returns the the absolute file path to "plantuml.jar" 
 --   with the directory if this executable
 
--- getPlantumlPath :: String
--- getPlantumlPath = do
---   execDir  <-  ( takeDirectory getExecutablePath )
---   fullPath <- joinPath [ execDir , "plantuml.jar" ]
---   return (fullPath)
-
-
-plantPath = "plantuml.jar"
-plantUmlProcess :: ImageFileName -> CreateProcess
-plantUmlProcess (ImageFileName _ fileType) = (proc "java" ["-jar", plantPath, "-pipe", "-t" ++ fileType])
+plantName = "plantuml.jar"
+plantUmlProcess :: FilePath -> ImageFileName -> CreateProcess
+plantUmlProcess plantPath (ImageFileName _ fileType) = ( proc "java" ["-jar", plantPath, "-pipe", "-t" ++ fileType])
   { std_in = CreatePipe, std_out = CreatePipe }
 
 pipe :: Handle -> Handle -> IO ()
